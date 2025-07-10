@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Kế hoạch Marketing 12 Tháng - Tien.win</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues & Yellow Accent -->
+    <!-- Application Structure Plan: The SPA is designed as a top-to-bottom narrative scroll. It starts with the high-level vision, introduces the target audience, then dives deep into the 3-phase roadmap. Each phase is a dedicated section with its KPIs, strategies, and product development goals visualized. This structure was chosen to guide the user logically from 'why' (the vision) to 'what' (the KPIs) and 'how' (the strategies) in a digestible, linear story, making a complex plan easy to follow. -->
+    <!-- Visualization & Content Choices: 
+        - Vision & KPIs: Goal: Inform -> Viz: Large Number Callouts. Justification: Immediately grabs attention for key metrics.
+        - Target Audience: Goal: Compare -> Viz: Donut Chart (Chart.js). Justification: Shows proportional focus clearly and simply.
+        - Roadmap: Goal: Organize -> Viz: HTML/CSS Timeline. Justification: Provides a clear, custom visual flow for the three phases, superior to a generic chart.
+        - NRU Breakdown: Goal: Compare -> Viz: Bar Chart (Chart.js). Justification: Effectively compares the contribution of different acquisition channels.
+        - Gamification Features: Goal: Organize -> Viz: Styled HTML lists with Unicode icons. Justification: Clean, scannable, and avoids visual clutter.
+        - All charts use Chart.js/Canvas. All diagrams use structured HTML/CSS with Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid #1976D2;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .phase-card {
+             background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
+             color: white;
+        }
+        .highlight-yellow {
+            color: #FFC107;
+        }
+        .bg-accent-yellow {
+             background-color: #FFC107;
+        }
+        .text-main-dark-blue {
+            color: #0D47A1;
+        }
+        .text-main-med-blue {
+            color: #1976D2;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- Section 1: Hero -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-main-dark-blue mb-4">Kế hoạch Marketing 12 Tháng</h1>
+            <p class="text-xl md:text-2xl text-main-med-blue font-light">Lộ trình đưa <span class="font-semibold">Tien.win</span> trở thành Nền tảng MMO số 1 Việt Nam</p>
+        </header>
+
+        <!-- Section 2: Vision & Target Audience -->
+        <section class="mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-left">
+                    <h2 class="text-3xl font-bold text-main-dark-blue mb-4">Tầm nhìn chiến lược</h2>
+                    <p class="mb-4 text-lg">Xây dựng Tien.win thành nền tảng nhiệm vụ kiếm tiền online (MMO) hàng đầu, tạo dựng cộng đồng trung thành và làm bàn đạp vững chắc để vươn ra thị trường quốc tế.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="text-xl highlight-yellow mr-3">✔</span>
+                            <span>Thông điệp: "Nhiệm vụ đơn giản, Hoa hồng hấp dẫn, Rút tiền dễ dàng"</span>
+                        </div>
+                        <div class="flex items-center">
+                             <span class="text-xl highlight-yellow mr-3">✔</span>
+                            <span>Mục tiêu: Dẫn đầu thị trường Việt Nam trong 12 tháng</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                     <h3 class="text-2xl font-bold text-center text-main-dark-blue mb-4">Phân bổ Đối Tượng Mục Tiêu</h3>
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="audienceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Roadmap Timeline -->
+        <section class="mb-20">
+             <h2 class="text-3xl md:text-4xl font-bold text-center text-main-dark-blue mb-12">Lộ Trình Marketing 12 Tháng</h2>
+             <div class="relative">
+                <!-- Connecting line -->
+                <div class="absolute left-1/2 -translate-x-1/2 top-5 bottom-5 w-1 bg-blue-200 rounded-full hidden md:block"></div>
+                
+                <div class="space-y-16">
+                    <!-- Phase 1 -->
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                        <div class="md:col-span-2 text-center md:text-right">
+                            <h3 class="text-3xl font-bold text-main-med-blue">Giai đoạn 1</h3>
+                            <p class="text-xl font-light text-gray-600">Tháng 1 - 3</p>
+                            <p class="mt-2 text-lg font-semibold">Thâm nhập & Xây dựng Nền tảng</p>
+                        </div>
+                        <div class="flex justify-center">
+                            <div class="w-10 h-10 bg-accent-yellow rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">1</div>
+                        </div>
+                        <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                            <p>Tốc độ và quyết liệt. Tập trung mọi nguồn lực lôi kéo người dùng chất lượng từ đối thủ và thúc đẩy sử dụng trong nội bộ để tạo "vốn" nhiệm vụ ban đầu.</p>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                         <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg order-last md:order-first">
+                            <p>Tăng tốc phát triển sản phẩm để trở thành nền tảng đa năng, đồng thời mở rộng quy mô người dùng ra thị trường đại chúng và khẳng định vị thế số 1 tại Việt Nam.</p>
+                        </div>
+                        <div class="flex justify-center order-first md:order-none">
+                             <div class="w-10 h-10 bg-accent-yellow rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">2</div>
+                        </div>
+                        <div class="md:col-span-2 text-center md:text-left order-first md:order-none">
+                            <h3 class="text-3xl font-bold text-main-med-blue">Giai đoạn 2</h3>
+                            <p class="text-xl font-light text-gray-600">Tháng 4 - 9</p>
+                            <p class="mt-2 text-lg font-semibold">Mở rộng & Dẫn đầu</p>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                        <div class="md:col-span-2 text-center md:text-right">
+                            <h3 class="text-3xl font-bold text-main-med-blue">Giai đoạn 3</h3>
+                            <p class="text-xl font-light text-gray-600">Tháng 10 - 12</p>
+                            <p class="mt-2 text-lg font-semibold">Tối ưu hóa & Duy trì</p>
+                        </div>
+                        <div class="flex justify-center">
+                             <div class="w-10 h-10 bg-accent-yellow rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">3</div>
+                        </div>
+                        <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-lg">
+                            <p>Phân tích dữ liệu để tối ưu hóa lợi nhuận, tăng cường giữ chân người dùng và chuẩn bị cho các kế hoạch tăng trưởng trong tương lai.</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- Phase 1 Details -->
+        <section class="py-16 px-4 md:px-8 bg-white rounded-xl shadow-xl mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-xl font-semibold uppercase tracking-wider text-main-med-blue">Giai đoạn 1: Thâm nhập & Xây dựng</h2>
+                <p class="text-3xl md:text-4xl font-bold text-main-dark-blue mt-2">Mục tiêu KPI Cốt lõi</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-center">
+                <div class="kpi-card">
+                    <p class="text-5xl font-extrabold text-main-dark-blue">8,000</p>
+                    <p class="text-lg text-gray-600 mt-2">Người dùng mới (NRU)</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="text-5xl font-extrabold text-main-dark-blue">>60%</p>
+                    <p class="text-lg text-gray-600 mt-2">Tỷ lệ Người dùng Active</p>
+                </div>
+                <div class="kpi-card">
+                    <p class="text-5xl font-extrabold text-main-dark-blue">&lt;50K</p>
+                    <p class="text-lg text-gray-600 mt-2">Chi phí / NRU (VNĐ)</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-3">
+                    <h3 class="text-2xl font-bold text-main-dark-blue mb-4">Phân rã Nguồn NRU (Mục tiêu)</h3>
+                    <div class="chart-container h-80">
+                        <canvas id="nruSourceChart"></canvas>
+                    </div>
+                </div>
+                <div class="lg:col-span-2">
+                    <h3 class="text-2xl font-bold text-main-dark-blue mb-4">Chiến lược & Hành động Chính</h3>
+                    <ul class="space-y-4">
+                        <li class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-bold text-main-med-blue">Chiến dịch "Di Dân"</h4>
+                            <p class="text-sm">Tấn công trực diện, lôi kéo user từ đối thủ bằng Tool Telegram & hoa hồng cao.</p>
+                        </li>
+                         <li class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-bold text-main-med-blue">Marketing Nội bộ</h4>
+                            <p class="text-sm">Phát hành voucher độc quyền để các team nội bộ tạo nhiệm vụ.</p>
+                        </li>
+                         <li class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-bold text-main-med-blue">Xây dựng Cộng đồng</h4>
+                            <p class="text-sm">Lấy Telegram làm "thủ phủ", booking KOLs MMO để review, tạo trust.</p>
+                        </li>
+                         <li class="p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-bold text-main-med-blue">Sản phẩm (Gamification Wave 1)</h4>
+                            <p class="text-sm">Ra mắt Thanh tiến độ, Điểm & Cấp độ, Nhiệm vụ hàng ngày.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 2 Details -->
+        <section class="py-16 px-4 md:px-8 phase-card rounded-xl shadow-xl mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-xl font-semibold uppercase tracking-wider text-blue-200">Giai đoạn 2: Mở rộng & Dẫn đầu</h2>
+                <p class="text-3xl md:text-4xl font-bold text-white mt-2">Tăng tốc & Bứt phá</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 text-center">
+                <div class="bg-white/20 p-6 rounded-lg">
+                    <p class="text-4xl font-bold highlight-yellow">50,000</p>
+                    <p class="mt-2">Người dùng mới</p>
+                </div>
+                <div class="bg-white/20 p-6 rounded-lg">
+                    <p class="text-4xl font-bold highlight-yellow">>40%</p>
+                    <p class="mt-2">Tỷ lệ Giữ chân (30 ngày)</p>
+                </div>
+                 <div class="bg-white/20 p-6 rounded-lg">
+                    <p class="text-4xl font-bold highlight-yellow">>1.5</p>
+                    <p class="mt-2">ROI Marketing</p>
+                </div>
+                <div class="bg-white/20 p-6 rounded-lg">
+                    <p class="text-4xl font-bold highlight-yellow">15+</p>
+                    <p class="mt-2">Đối tác mới</p>
+                </div>
+            </div>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Chiến lược & Hành động Chính</h3>
+                     <ul class="space-y-4">
+                        <li class="p-4 bg-white/10 rounded-lg">
+                            <h4 class="font-bold highlight-yellow">Chiến dịch "Bình Dân Hóa MMO"</h4>
+                            <p class="text-sm">Tiếp cận thị trường mass qua quảng cáo trả phí (Google, FB, TikTok) và content giáo dục.</p>
+                        </li>
+                         <li class="p-4 bg-white/10 rounded-lg">
+                            <h4 class="font-bold highlight-yellow">Marketing Sản phẩm mới</h4>
+                            <p class="text-sm">Ra mắt nhiệm vụ GEO, Content... và thực hiện co-marketing với đối tác.</p>
+                        </li>
+                         <li class="p-4 bg-white/10 rounded-lg">
+                            <h4 class="font-bold highlight-yellow">Xây dựng Thương hiệu Dẫn đầu</h4>
+                            <p class="text-sm">PR, seeding các cột mốc ấn tượng, làm mới thông điệp thương hiệu.</p>
+                        </li>
+                    </ul>
+                </div>
+                 <div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Sản phẩm (Gamification Wave 2)</h3>
+                     <ul class="space-y-4">
+                        <li class="p-4 bg-white/10 rounded-lg">
+                            <h4 class="font-bold highlight-yellow">Huy hiệu & Thành tích</h4>
+                            <p class="text-sm">Vinh danh các thành tựu của người dùng ("Trùm săn SEO", "Chiến thần Social").</p>
+                        </li>
+                         <li class="p-4 bg-white/10 rounded-lg">
+                            <h4 class="font-bold highlight-yellow">Bảng xếp hạng (Leaderboards)</h4>
+                            <p class="text-sm">Tổ chức sự kiện "Đua TOP Tuần Đầu" để tạo cạnh tranh và thu hút.</p>
+                        </li>
+                         <li class="p-4 bg-white/10 rounded-lg">
+                            <h4 class="font-bold highlight-yellow">Vòng quay may mắn / Hộp quà bí ẩn</h4>
+                            <p class="text-sm">Thêm yếu tố bất ngờ, may mắn để tăng sự hứng thú.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 3 Details -->
+        <section class="py-16 px-4 md:px-8 bg-gray-700 text-white rounded-xl shadow-xl mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-xl font-semibold uppercase tracking-wider text-gray-400">Giai đoạn 3: Tối ưu & Duy trì</h2>
+                <p class="text-3xl md:text-4xl font-bold mt-2">Vững chắc & Phát triển Bền vững</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                 <div class="lg:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">Mục tiêu KPI</h3>
+                     <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-xl text-green-400 mr-3 mt-1">✔</span>
+                            <div>
+                                <h4 class="font-bold">Tối ưu hóa ROI</h4>
+                                <p class="text-sm text-gray-300">Xác định và tập trung ngân sách vào các kênh có ROI cao nhất.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                             <span class="text-xl text-green-400 mr-3 mt-1">✔</span>
+                            <div>
+                                <h4 class="font-bold">Giảm Churn Rate &lt; 15%</h4>
+                                <p class="text-sm text-gray-300">Tăng cường giữ chân người dùng qua các chiến dịch remarketing.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                             <span class="text-xl text-green-400 mr-3 mt-1">✔</span>
+                            <div>
+                                <h4 class="font-bold">Lập kế hoạch Tăng trưởng</h4>
+                                <p class="text-sm text-gray-300">Hoàn thiện lộ trình cho năm tiếp theo và kế hoạch mở rộng quốc tế.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                 <div class="lg:col-span-2">
+                     <h3 class="text-2xl font-bold mb-4">Hành động Chính</h3>
+                     <ul class="space-y-4">
+                        <li class="p-4 bg-gray-600 rounded-lg">
+                            <h4 class="font-bold">Phân tích sâu & A/B Testing</h4>
+                            <p class="text-sm">Sử dụng dữ liệu để tìm ra công thức hiệu quả nhất cho quảng cáo và landing page.</p>
+                        </li>
+                        <li class="p-4 bg-gray-600 rounded-lg">
+                            <h4 class="font-bold">Marketing Giữ chân</h4>
+                            <p class="text-sm">Triển khai kịch bản email/notification tự động, tổ chức sự kiện theo mùa.</p>
+                        </li>
+                        <li class="p-4 bg-gray-600 rounded-lg">
+                            <h4 class="font-bold">Lắng nghe & Phát triển</h4>
+                            <p class="text-sm">Thu thập feedback người dùng, ra mắt Gamification Wave 3 (Mục tiêu cá nhân hóa).</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center p-8 border-t border-gray-200">
+        <p class="text-gray-600">&copy; 2025 Tien.win Project. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const chartJsTooltipConfig = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const wrapLabel = (str, maxWidth) => {
+                if (str.length <= maxWidth) return str;
+                let wrapped = [];
+                let words = str.split(' ');
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > maxWidth) {
+                        wrapped.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                });
+                wrapped.push(currentLine.trim());
+                return wrapped;
+            };
+
+            // Audience Chart
+            const audienceCtx = document.getElementById('audienceChart').getContext('2d');
+            new Chart(audienceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cộng đồng MMO & Đối thủ', 'Người dùng Đại chúng', 'Khách hàng Nội bộ'],
+                    datasets: [{
+                        label: 'Phân bổ đối tượng',
+                        data: [50, 45, 5],
+                        backgroundColor: [
+                            '#1976D2', // Medium Blue
+                            '#42A5F5', // Light Blue
+                            '#FFC107', // Yellow Accent
+                        ],
+                        borderColor: '#f0f4f8',
+                        borderWidth: 4,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        ...chartJsTooltipConfig.plugins,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+
+            // NRU Source Chart
+            const nruSourceCtx = document.getElementById('nruSourceChart').getContext('2d');
+            const nruLabels = [
+                wrapLabel("Chiến dịch 'Di Dân' (Tool/CTV)", 20),
+                wrapLabel("KOLs & Xây dựng Cộng đồng", 20),
+                wrapLabel("Kênh khác (Tự nhiên...)", 20)
+            ];
+            new Chart(nruSourceCtx, {
+                type: 'bar',
+                data: {
+                    labels: nruLabels,
+                    datasets: [{
+                        label: 'Số lượng NRU Mục tiêu',
+                        data: [4500, 2500, 1000],
+                        backgroundColor: [
+                            '#1976D2',
+                            '#42A5F5',
+                            '#BBDEFB'
+                        ],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                             grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        ...chartJsTooltipConfig.plugins,
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
